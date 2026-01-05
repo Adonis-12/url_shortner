@@ -1,6 +1,6 @@
 const pool = require('../db')
 const {nanoid} = require('nanoid')
-
+// Getting url
 async function getUrl(req,res){
     const shortId = req.params.shortId
     const result = await pool.query(
@@ -8,8 +8,9 @@ async function getUrl(req,res){
         [shortId]
     )
     console.log(result)
-    return res.json(result.rows[0])
+    res.redirect("https://www.facebook.com/")
 }
+// Creating short_id
 async function createUrl(req,res){
     const long_url = req.body.url
     let short_id

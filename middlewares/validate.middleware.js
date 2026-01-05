@@ -1,4 +1,5 @@
 const pool = require('../db')
+// validate get request
 async function validateUrl(req,res,next){
     if(!req.body || !req.body.url){
         return res.status(400).json({
@@ -11,12 +12,13 @@ async function validateUrl(req,res,next){
         [url]
     )
     if(exists.rowCount){
-        res.status(400).json({
+       return  res.status(400).json({
             message : "url already exists"
         })
     }
     next()
 }
+// Validate post request
 async function validateRequest(req,res,next){
     const shortId = req.params.shortId
     console.log(shortId)
@@ -24,7 +26,6 @@ async function validateRequest(req,res,next){
         'SELECT short_id FROM urls WHERE short_id = $1',
         [shortId]
     )
-    console.log(result.rows)
     if(!result.rowCount){
         return res.status(404).json({
             error : "url not found"
